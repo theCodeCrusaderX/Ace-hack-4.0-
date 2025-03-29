@@ -56,3 +56,23 @@ export const selectAnswer = async (req, res) => {
         res.status(500).json({ error: "An error occurred while selecting the answer" });
     }
 };
+
+export const getAnswersByDoubtId = async (req, res) => {
+    try {
+        const { doubtId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(doubtId)) {
+            return res.status(400).json({ error: "Invalid doubt ID" });
+        }
+
+        const answers = await Answer.find({ doubt: doubtId });
+
+        if (!answers || answers.length === 0) {
+            return res.status(404).json({ error: "No answers found for this doubt" });
+        }
+
+        res.status(200).json({ answers });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

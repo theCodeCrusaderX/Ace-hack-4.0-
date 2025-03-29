@@ -9,6 +9,7 @@ import AuthLogin from "./pages/auth/AuthLogin";
 import AuthRegister from "./pages/auth/AuthRegister";
 import GuestLogin from "./pages/auth/GuestLogin";
 import Problem from "./pages/problem/Problem";
+import DoubtDetails from "./pages/doubt/DoubtDetails.jsx";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ function App() {
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
           <Route path="guest" element={<GuestLogin />} />
+          <Route path="doubt/:id" element={<DoubtDetails />} />
         </Route>
         <Route
           path="/problem"

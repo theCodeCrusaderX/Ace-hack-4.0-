@@ -22,15 +22,16 @@ function Problem() {
     console.log('11', data);
     
 
-    const API_BASE_URL = 'http://localhost:8000/api/doubt'; // Replace with your actual API base URL
+    const API_BASE_URL = 'http://localhost:8000/api/doubt/'; // Replace with your actual API base URL
     
       try {
         const response = await axios.post(`${API_BASE_URL}/problems`, problemData,
         );
         console.log('Problem submitted successfully:', response.data);
         reset(); // Reset the form after successful submission
-        
+      
         return response.data;
+        navigate(`/doubt/${response.data.doubt._id}`);
       } catch (error) {
         throw new Error(error.response?.data?.message || 'Failed to submit problem');
       }

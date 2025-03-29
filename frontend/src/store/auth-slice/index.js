@@ -58,7 +58,7 @@ export const logoutUser = createAsyncThunk("/auth/logoutUser", async () => {
 
 export const checkAuth = createAsyncThunk("/auth/checkAuth", async () => {
   const response = await axios.get(
-    "http://localhost:8000/api/v1/users/check-auth",
+    "http://localhost:8000/api/user/check-auth",
     {
       withCredentials: true,
       headers: {
@@ -76,7 +76,7 @@ export const loginAsGuest = createAsyncThunk(
   "/auth/loginAsGuest",
   async () => {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/users/guest-login",
+      "http://localhost:8000/api/user/guest-login",
       {},
       {
         withCredentials: true,
