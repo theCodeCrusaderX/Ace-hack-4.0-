@@ -14,7 +14,7 @@ export const registerUser = createAsyncThunk(
 
   async (data) => {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/users/register",
+      "http://localhost:8000/api/user/register",
       data,
       {
         withCredentials: true,
@@ -31,7 +31,7 @@ export const loginUser = createAsyncThunk(
 
   async (data) => {
     const response = await axios.post(
-      "http://localhost:8000/api/v1/users/login",
+      "http://localhost:8000/api/user/login",
       data,
       {
         withCredentials: true,
@@ -45,7 +45,7 @@ export const loginUser = createAsyncThunk(
 
 export const logoutUser = createAsyncThunk("/auth/logoutUser", async () => {
   const response = await axios.post(
-    "http://localhost:8000/api/v1/users/logout",
+    "http://localhost:8000/api/user/logout",
     {},
     {
       withCredentials: true,
