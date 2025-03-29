@@ -1,14 +1,61 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CheckAuth from "./components/common/CheckAuth";
+import { checkAuth } from "./store/auth-slice";
+import AuthLayout from "./components/auth/AuthLayout";
+import AuthLogin from "./pages/auth/AuthLogin";
+import AuthRegister from "./pages/auth/AuthRegister";
+import GuestLogin from "./pages/auth/GuestLogin";
+import Problem from "./pages/problem/Problem";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const dispatch = useDispatch();
 
+  const { user, isAuthenticated, isLoading } = useSelector(
+    (state) => state.auth
+  );
+
+  //using useEffect it prevent api to call in infinite loop
+  //we put dispatch as dependency arr if it gets changes which
+  //is not regularly happen for more complex project
+  useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
   return (
     <div>
-      <h1 class="text-3xl font-bold underline">Hello world!</h1>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <CheckAuth
+              isAuthenticated={isAuthenticated}
+              user={user}
+            ></CheckAuth>
+          }
+        ></Route>
+        <Route
+          path="/auth"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}> 
+              <AuthLayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="login" element={<AuthLogin />} />
+          <Route path="register" element={<AuthRegister />} />
+          <Route path="guest" element={<GuestLogin />} />
+        </Route>
+        <Route
+          path="/problem"
+          element={
+            <checkAuth isAuthenticated={isAuthenticated} user={user}>
+              <Problem />
+            </checkAuth>
+          }
+        />
+      </Routes>
     </div>
   );
 }
