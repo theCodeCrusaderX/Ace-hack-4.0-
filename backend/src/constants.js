@@ -1,1 +1,1 @@
-export const DB_NAME = "E-comMERN"
+export const DB_NAME = "acehack";

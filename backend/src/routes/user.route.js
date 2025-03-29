@@ -1,5 +1,5 @@
-import {Router} from "express"
-import {checkAuth,guestLogin,logOut,loginUser,registerUser} from "../controllers/user.controller.js"
+import Router from "express"
+import {checkAuth,logOut,loginUser,registerUser,guestLogin} from "../controllers/user.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js"
 
 const router = Router()
