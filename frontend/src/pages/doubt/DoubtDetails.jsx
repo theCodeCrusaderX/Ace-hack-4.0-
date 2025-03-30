@@ -4,6 +4,8 @@ import axios from "axios";
 
 function DoubtDetails() {
   const { doubtId } = useParams(); // Get the doubtId from the URL
+  console.log("Doubt ID from URL:", doubtId); // Debugging to ensure doubtId is retrieved
+
   const [doubt, setDoubt] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,12 +17,24 @@ function DoubtDetails() {
         setLoading(true);
 
         // Fetch the doubt details
-        const doubtResponse = await axios.get(`http://localhost:8000/api/doubt/alldoubt}`);
-        setDoubt(doubtResponse.data.doubt);
+        const doubtResponse = await axios.get(
+          `http://localhost:8000/api/doubt/alldoubt`, // Correct endpoint with doubtId
+          {
+            withCredentials: true, // Include cookies in the request
+          }
+        );
+        setDoubt(doubtResponse.data.doubt); // Set the entire doubt object
+        console.log("Doubt fetched:", doubtResponse.data.doubt);
 
         // Fetch the answers for the doubt
-        const answersResponse = await axios.get(`http://localhost:8000/api/answers/doubt/${doubtId}`);
+        const answersResponse = await axios.get(
+          `http://localhost:8000/api/answer/doubt/${doubtId}`, // Correct endpoint with doubtId
+          {
+            withCredentials: true, // Include cookies in the request
+          }
+        );
         setAnswers(answersResponse.data.answers);
+        console.log("Answers fetched:", answersResponse.data.answers);
 
         setLoading(false);
       } catch (err) {
@@ -29,8 +43,10 @@ function DoubtDetails() {
       }
     };
 
-    fetchDoubtAndAnswers();
-  }, [doubtId]);
+  
+      fetchDoubtAndAnswers();
+    
+  }, []);
 
   if (loading) {
     return <div className="text-center py-8">Loading...</div>;
@@ -38,6 +54,10 @@ function DoubtDetails() {
 
   if (error) {
     return <div className="text-center py-8 text-red-600">{error}</div>;
+  }
+
+  if (!doubt) {
+    return <div className="text-center py-8">Doubt details not found.</div>;
   }
 
   return (

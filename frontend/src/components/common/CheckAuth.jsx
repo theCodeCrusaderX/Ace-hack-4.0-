@@ -10,8 +10,17 @@ function CheckAuth({ isAuthenticated, user, children }) {
     if (!isAuthenticated) {
       return <Navigate to="/auth/login" />;
     } else {
-      <Navigate to="/problem" />;
+      return <Navigate to="/problem" />;
     }
+  }
+
+  if (
+    isAuthenticated &&
+    (location.pathname.includes("/login") ||
+      location.pathname.includes("/register") ||
+      location.pathname.includes("/guest"))
+  ) {
+    return <Navigate to="/problem" />;
   }
 
   if (

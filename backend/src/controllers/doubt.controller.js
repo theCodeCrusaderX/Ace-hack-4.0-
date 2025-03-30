@@ -3,7 +3,11 @@ import Doubt from "../models/doubt.model.js";
 export const createDoubt = async (req, res) => {
     try {
         const { title, description, tipAmount } = req.body;
-        const newDoubt = new Doubt({ user: req.user.userId, title, description, tipAmount });
+        console.log('hello');
+        
+        console.log("req.body", req.body);
+        
+        const newDoubt = new Doubt({ user: req.user._id, title, description, tipAmount });
         await newDoubt.save();
 
         res.status(201).json({ message: "Doubt created successfully", doubt: newDoubt });
@@ -30,7 +34,9 @@ export const selectanswer = async (req, res) => {
 
 export const getDoubtsByUserId = async (req, res) => {
     try {
-        const { userId } = req.user._id;
+        const userId = req.user._id; // Directly access the user ID
+        console.log("User ID:", userId); // Print the user ID for debugging
+
         const doubts = await Doubt.find({ user: userId });
 
         if (!doubts || doubts.length === 0) {
@@ -39,6 +45,7 @@ export const getDoubtsByUserId = async (req, res) => {
 
         res.status(200).json({ doubts });
     } catch (error) {
+        console.error("Error fetching doubts:", error.message); // Log the error for debugging
         res.status(400).json({ error: error.message });
     }
 };

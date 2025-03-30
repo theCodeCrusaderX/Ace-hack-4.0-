@@ -28,6 +28,8 @@ import userRouter from "./routes/user.route.js"
 app.use("/api/user", userRouter)
 import AnswerRoute from "./routes/answer.routes.js"
 app.use("/api/answer", AnswerRoute)
+
+
 import DoubtRoute from "./routes/doubt.routes.js"
 app.use("/api/doubt", DoubtRoute)
 

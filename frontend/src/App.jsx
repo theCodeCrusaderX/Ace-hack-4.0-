@@ -9,7 +9,8 @@ import AuthLogin from "./pages/auth/AuthLogin";
 import AuthRegister from "./pages/auth/AuthRegister";
 import GuestLogin from "./pages/auth/GuestLogin";
 import Problem from "./pages/problem/Problem";
-import DoubtDetails from "./pages/doubt/DoubtDetails.jsx";
+import DoubtDetails from "./pages/doubt/DoubtDetails";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,28 +19,22 @@ function App() {
     (state) => state.auth
   );
 
-  //using useEffect it prevent api to call in infinite loop
-  //we put dispatch as dependency arr if it gets changes which
-  //is not regularly happen for more complex project
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <CheckAuth
-              isAuthenticated={isAuthenticated}
-              user={user}
-            ></CheckAuth>
-          }
-        ></Route>
+        {/* Auth Routes */}
         <Route
           path="/auth"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}> 
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
               <AuthLayout />
             </CheckAuth>
           }
@@ -47,16 +42,17 @@ function App() {
           <Route path="login" element={<AuthLogin />} />
           <Route path="register" element={<AuthRegister />} />
           <Route path="guest" element={<GuestLogin />} />
-          <Route path="doubt/:id" element={<DoubtDetails />} />
         </Route>
-        <Route
-          path="/problem"
-          element={
-            <checkAuth isAuthenticated={isAuthenticated} user={user}>
-              <Problem />
-            </checkAuth>
-          }
-        />
+
+        {/* Problem Route */}
+        <Route path="/problem" element={<Problem />} />
+
+        {/* Doubt Details Route */}
+        {/* <Route path="/doubt/:id" element={<DoubtDetails />} /> */}
+        <Route path="/doubt/:doubtId" element={<DoubtDetails />} />
+
+        {/* dashboard */}
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </div>
   );
