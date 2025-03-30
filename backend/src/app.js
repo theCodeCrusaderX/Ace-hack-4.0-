@@ -6,7 +6,7 @@ const app = express()
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: true, // Allow all origins
     methods: ["GET", "POST", "DELETE", "PUT"],
     allowedHeaders: [
       "Content-Type",
@@ -29,15 +29,7 @@ app.use("/api/user", userRouter)
 import AnswerRoute from "./routes/answer.routes.js"
 app.use("/api/answer", AnswerRoute)
 
-
 import DoubtRoute from "./routes/doubt.routes.js"
 app.use("/api/doubt", DoubtRoute)
-
-
-
-
-
-
-
 
 export {app}

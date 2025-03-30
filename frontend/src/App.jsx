@@ -11,7 +11,7 @@ import GuestLogin from "./pages/auth/GuestLogin";
 import Problem from "./pages/problem/Problem";
 import DoubtDetails from "./pages/doubt/DoubtDetails";
 import Dashboard from "./pages/dashboard/Dashboard";
-
+import DoubtPage from "./pages/dashboard/doubtpage.jsx";
 function App() {
   const dispatch = useDispatch();
 
@@ -49,7 +49,7 @@ function App() {
 
         {/* Doubt Details Route */}
         {/* <Route path="/doubt/:id" element={<DoubtDetails />} /> */}
-        <Route path="/doubt/:doubtId" element={<DoubtDetails />} />
+        <Route path="/getdoubt/:doubtId" element={<DoubtPage />} />
 
         {/* dashboard */}
         <Route path="/dashboard" element={<Dashboard />} />

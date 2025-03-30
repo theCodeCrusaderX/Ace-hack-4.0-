@@ -49,3 +49,23 @@ export const getDoubtsByUserId = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+export const getDoubtById = async (req, res) => {
+    try {
+        const { doubtId } = req.params; 
+
+        // Find the doubt by its ID
+        const doubt = await Doubt.findById(doubtId);
+
+        // If the doubt is not found, return a 404 error
+        if (!doubt) {
+            return res.status(404).json({ error: "Doubt not found" });
+        }
+
+        // Return the doubt details
+        res.status(200).json({ doubt });
+    } catch (error) {
+        console.error("Error fetching doubt by ID:", error.message); // Log the error for debugging
+        res.status(400).json({ error: error.message });
+    }
+};
